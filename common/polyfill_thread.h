@@ -162,7 +162,7 @@ private:
     friend class stop_source;
     template <typename Callback>
     friend class stop_callback;
-    stop_token(shared_ptr<polyfill::stop_state> stop_state) : m_stop_state(move(stop_state)) {}
+    stop_token(shared_ptr<polyfill::stop_state> stop_state) : m_stop_state(std::move(stop_state)) {}
 
 private:
     shared_ptr<polyfill::stop_state> m_stop_state;
