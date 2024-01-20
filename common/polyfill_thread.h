@@ -109,7 +109,7 @@ public:
 
         // Insert the callback.
         stop_state_callback ret = ++m_next_callback;
-        m_callbacks.emplace(ret, move(f));
+        m_callbacks.emplace(ret, std::move(f));
         return ret;
     }
 
