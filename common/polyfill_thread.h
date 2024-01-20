@@ -260,7 +260,7 @@ public:
               typename = enable_if_t<!is_same_v<remove_cvref_t<F>, jthread>>>
     explicit jthread(F&& f, Args&&... args)
         : m_stop_state(make_shared<polyfill::stop_state>()),
-          m_thread(make_thread(move(f), move(args)...)) {}
+          m_thread(make_thread(std::move(f), std::move(args)...)) {}
 
     ~jthread() {
         if (joinable()) {
