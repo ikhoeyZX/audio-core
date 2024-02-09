@@ -4,7 +4,7 @@
 //
 // TODO: remove this file when jthread is supported by all compilation targets
 //
-
+ 
 #pragma once
 
 #include <version>
