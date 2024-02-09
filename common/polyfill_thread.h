@@ -198,7 +198,7 @@ public:
 private:
     friend class jthread;
     explicit stop_source(shared_ptr<polyfill::stop_state> stop_state)
-        : m_stop_state(move(stop_state)) {}
+        : m_stop_state(std::move(stop_state)) {}
 
 private:
     shared_ptr<polyfill::stop_state> m_stop_state;
@@ -218,16 +218,16 @@ public:
                            C&& cb) noexcept(is_nothrow_constructible_v<Callback, C>)
         : m_stop_state(st.m_stop_state) {
         if (m_stop_state) {
-            m_callback = m_stop_state->insert_callback(move(cb));
+            m_callback = m_stop_state->insert_callback(std::move(cb));
         }
     }
     template <typename C>
         requires constructible_from<Callback, C>
     explicit stop_callback(stop_token&& st,
                            C&& cb) noexcept(is_nothrow_constructible_v<Callback, C>)
-        : m_stop_state(move(st.m_stop_state)) {
+        : m_stop_state(std::move(st.m_stop_state)) {
         if (m_stop_state) {
-            m_callback = m_stop_state->insert_callback(move(cb));
+            m_callback = m_stop_state->insert_callback(std::move(cb));
         }
     }
     ~stop_callback() {
@@ -317,9 +317,9 @@ private:
     template <typename F, typename... Args>
     thread make_thread(F&& f, Args&&... args) {
         if constexpr (is_invocable_v<decay_t<F>, stop_token, decay_t<Args>...>) {
-            return thread(move(f), get_stop_token(), move(args)...);
+            return thread(std::move(f), get_stop_token(), std::move(args)...);
         } else {
-            return thread(move(f), move(args)...);
+            return thread(std::move(f), std::move(args)...);
         }
     }
 
